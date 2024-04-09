@@ -1368,6 +1368,13 @@ static const int GEO_NUM_DISTANCES =                                4;
 static const int GEO_NUM_PRESTORED_MASK =                           6;
 static const int GEO_WEIGHT_MASK_SIZE = 3 * (GEO_MAX_CU_SIZE >> 3) * 2 + GEO_MAX_CU_SIZE;
 
+#if GPM_CURVE
+static const int GEO_CURVE_MIN_CU_LOG2 = 4;
+static const int GEO_CURVE_MAX_CU_LOG2 = 6;
+static const int GEO_CURVE_MIN_CU_SIZE = 1 << GEO_CURVE_MIN_CU_LOG2;
+static const int GEO_CURVE_MAX_CU_SIZE = 1 << GEO_CURVE_MAX_CU_LOG2;
+#endif
+
 #if JVET_AB0155_SGPM
 static const int GEO_MIN_CU_LOG2_EX         = 2;
 static const int GEO_MAX_CU_LOG2_EX         = 6;

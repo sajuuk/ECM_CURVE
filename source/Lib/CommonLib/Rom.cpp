@@ -5223,6 +5223,17 @@ uint16_t g_paletteQuant[57];
 uint8_t g_paletteRunTopLut [5] = { 0, 1, 1, 2, 2 };
 uint8_t g_paletteRunLeftLut[5] = { 0, 1, 2, 3, 4 };
 
+#if GPM_CURVE
+const int circleCenter[6][3]={
+  {-153,56,46656},
+  {-153,4,49729},
+  {-153,-49,58564},
+  {-153,-153,93636},
+  {-49,-153,58564},
+  {56,-153,46656},
+};
+#endif
+
 void initGeoTemplate()
 {
   g_geoParams = new int16_t*[GEO_NUM_PARTITION_MODE];
@@ -5454,12 +5465,31 @@ void initGeoTemplate()
     }
   }
 #endif
+#if GPM_CURVE
+  FILE *file = fopen("g_geoWeights.txt", "wb");
+  for (int angleIdx = 0; angleIdx < (GEO_NUM_ANGLES >> 2) + 1; angleIdx++)
+  {
+    if (g_angle2mask[angleIdx] == -1)
+    {
+      continue;
+    }
+    for (int bldIdx = 0; bldIdx < TOTAL_GEO_BLENDING_NUM; bldIdx++)
+    {
+      int index = 0;
+      fwrite(g_geoWeights[bldIdx][g_angle2mask[angleIdx]],sizeof(int16_t),GEO_WEIGHT_MASK_SIZE * GEO_WEIGHT_MASK_SIZE,file);
+    }
+  }
+  fclose(file);
+#endif
 
 }
 
 int16_t** g_geoParams;
 #if JVET_AB0155_SGPM
 int16_t *g_geoWeights[TOTAL_GEO_BLENDING_NUM][GEO_NUM_PRESTORED_MASK];
+#if GPM_CURVE
+int16_t *g_geoCurveWeights[TOTAL_GEO_BLENDING_NUM][GEO_NUM_PRESTORED_MASK];
+#endif
 int      g_bld2Width[TOTAL_GEO_BLENDING_NUM] = { 1, 2, 4, 8, 16, 32 };
 #elif JVET_AA0058_GPM_ADAPTIVE_BLENDING
 int16_t*  g_geoWeights[GEO_BLENDING_NUM][GEO_NUM_PRESTORED_MASK];
