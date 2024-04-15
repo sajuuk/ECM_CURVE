@@ -9105,7 +9105,7 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
       maskStride2 = -(int)cu.lwidth();
       sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
 #if GPM_CURVE
-      if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+      if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
       {
         sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
       }
@@ -9118,7 +9118,7 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
       maskStride = GEO_WEIGHT_MASK_SIZE;
       sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
 #if GPM_CURVE
-      if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+      if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
       {
         sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
       }
@@ -9131,7 +9131,7 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
       maskStride2 = -(int)cu.lwidth();
       sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
 #if GPM_CURVE
-      if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+      if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
       {
         sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
       }
@@ -10555,7 +10555,7 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
         maskStride2 = -(int)cu.lwidth();
         sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
 #if GPM_CURVE
-        if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+        if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
         {
           sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
         }
@@ -10568,7 +10568,7 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
         maskStride = GEO_WEIGHT_MASK_SIZE;
         sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
 #if GPM_CURVE
-        if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+        if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
         {
           sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
         }
@@ -10581,7 +10581,7 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
         maskStride2 = -(int)cu.lwidth();
         sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
 #if GPM_CURVE
-        if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+        if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
         {
           sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
         }
@@ -10872,7 +10872,7 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
           maskStride2 = -(int)cu.lwidth();
           sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
 #if GPM_CURVE
-          if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+          if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
           {
             sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
           }
@@ -10885,7 +10885,7 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
           maskStride = GEO_WEIGHT_MASK_SIZE;
           sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
 #if GPM_CURVE
-          if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+          if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
           {
             sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
           }
@@ -10898,7 +10898,7 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
           maskStride2 = -(int)cu.lwidth();
           sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
 #if GPM_CURVE
-          if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+          if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
           {
             sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
           }
@@ -18085,7 +18085,7 @@ void EncCu::xCheckRDCostIBCModeMerge2Nx2N(CodingStructure *&tempCS, CodingStruct
             maskStride2 = -(int)cu.lwidth();
             sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
 #if GPM_CURVE
-            if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+            if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
             {
               sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
             }
@@ -18098,7 +18098,7 @@ void EncCu::xCheckRDCostIBCModeMerge2Nx2N(CodingStructure *&tempCS, CodingStruct
             maskStride = GEO_WEIGHT_MASK_SIZE;
             sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
 #if GPM_CURVE
-            if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+            if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
             {
               sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
             }
@@ -18110,7 +18110,7 @@ void EncCu::xCheckRDCostIBCModeMerge2Nx2N(CodingStructure *&tempCS, CodingStruct
             maskStride2 = -(int)cu.lwidth();
             sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
 #if GPM_CURVE
-            if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+            if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
             {
               sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
             }

@@ -4473,7 +4473,7 @@ void xWeightedGeoBlk_SSE(const PredictionUnit &pu, const uint32_t width, const u
     stepY = -GEO_WEIGHT_MASK_SIZE;
     weight = &g_geoWeights[bldIdx][g_angle2mask[angle]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
 #if GPM_CURVE
-    if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+    if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
     {
       weight = &g_geoCurveWeights[bldIdx][g_angle2mask[angle]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
     }
@@ -4484,7 +4484,7 @@ void xWeightedGeoBlk_SSE(const PredictionUnit &pu, const uint32_t width, const u
     stepY = GEO_WEIGHT_MASK_SIZE;
     weight = &g_geoWeights[bldIdx][g_angle2mask[angle]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
 #if GPM_CURVE
-    if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+    if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
     {
       weight = &g_geoCurveWeights[bldIdx][g_angle2mask[angle]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
     }
@@ -4495,7 +4495,7 @@ void xWeightedGeoBlk_SSE(const PredictionUnit &pu, const uint32_t width, const u
     stepY = GEO_WEIGHT_MASK_SIZE;
     weight = &g_geoWeights[bldIdx][g_angle2mask[angle]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
 #if GPM_CURVE
-    if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+    if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
     {
       weight = &g_geoCurveWeights[bldIdx][g_angle2mask[angle]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
     }
@@ -4738,7 +4738,7 @@ void xWeightedGeoBlkRounded_SSE(const PredictionUnit &pu, const uint32_t width, 
     stepY = -GEO_WEIGHT_MASK_SIZE;
     weight = &g_geoWeights[bldIdx][g_angle2mask[angle]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
 #if GPM_CURVE
-    if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+    if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
     {
       weight = &g_geoCurveWeights[bldIdx][g_angle2mask[angle]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
     }
@@ -4749,7 +4749,7 @@ void xWeightedGeoBlkRounded_SSE(const PredictionUnit &pu, const uint32_t width, 
     stepY = GEO_WEIGHT_MASK_SIZE;
     weight = &g_geoWeights[bldIdx][g_angle2mask[angle]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
 #if GPM_CURVE
-    if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+    if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth())) 
     {
       weight = &g_geoCurveWeights[bldIdx][g_angle2mask[angle]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
     }
@@ -4760,7 +4760,7 @@ void xWeightedGeoBlkRounded_SSE(const PredictionUnit &pu, const uint32_t width, 
     stepY = GEO_WEIGHT_MASK_SIZE;
     weight = &g_geoWeights[bldIdx][g_angle2mask[angle]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
 #if GPM_CURVE
-    if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+    if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= GEO_CURVE_MIN_CU_IDX && CU::isGeoCURVEAvailable(splitDir,cu.lwidth()))
     {
       weight = &g_geoCurveWeights[bldIdx][g_angle2mask[angle]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
     }
