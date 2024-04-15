@@ -9104,6 +9104,12 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
       maskStride = -GEO_WEIGHT_MASK_SIZE;
       maskStride2 = -(int)cu.lwidth();
       sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
+#if GPM_CURVE
+      if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+      {
+        sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
+      }
+#endif
     }
     else if (g_angle2mirror[angle] == 1)
     {
@@ -9111,6 +9117,12 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
       maskStride2 = cu.lwidth();
       maskStride = GEO_WEIGHT_MASK_SIZE;
       sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
+#if GPM_CURVE
+      if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+      {
+        sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
+      }
+#endif
     }
     else
     {
@@ -9118,6 +9130,12 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
       maskStride = GEO_WEIGHT_MASK_SIZE;
       maskStride2 = -(int)cu.lwidth();
       sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
+#if GPM_CURVE
+      if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+      {
+        sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
+      }
+#endif
     }
 
 #if JVET_AG0164_AFFINE_GPM
@@ -10536,6 +10554,12 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
         maskStride = -GEO_WEIGHT_MASK_SIZE;
         maskStride2 = -(int)cu.lwidth();
         sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
+#if GPM_CURVE
+        if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+        {
+          sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
+        }
+#endif
       }
       else if (g_angle2mirror[angle] == 1)
       {
@@ -10543,6 +10567,12 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
         maskStride2 = cu.lwidth();
         maskStride = GEO_WEIGHT_MASK_SIZE;
         sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
+#if GPM_CURVE
+        if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+        {
+          sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
+        }
+#endif
       }
       else
       {
@@ -10550,6 +10580,12 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
         maskStride = GEO_WEIGHT_MASK_SIZE;
         maskStride2 = -(int)cu.lwidth();
         sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
+#if GPM_CURVE
+        if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+        {
+          sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
+        }
+#endif
       }
 #if JVET_AG0164_AFFINE_GPM
       for (uint8_t mergeCand = 0; mergeCand < numRegularGpmMergeCand; mergeCand++)
@@ -10835,6 +10871,12 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
           maskStride = -GEO_WEIGHT_MASK_SIZE;
           maskStride2 = -(int)cu.lwidth();
           sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
+#if GPM_CURVE
+          if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+          {
+            sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
+          }
+#endif
         }
         else if (g_angle2mirror[angle] == 1)
         {
@@ -10842,6 +10884,12 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
           maskStride2 = cu.lwidth();
           maskStride = GEO_WEIGHT_MASK_SIZE;
           sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
+#if GPM_CURVE
+          if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+          {
+            sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
+          }
+#endif
         }
         else
         {
@@ -10849,6 +10897,12 @@ void EncCu::xCheckRDCostMergeGeoComb2Nx2N(CodingStructure *&tempCS, CodingStruct
           maskStride = GEO_WEIGHT_MASK_SIZE;
           maskStride2 = -(int)cu.lwidth();
           sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
+#if GPM_CURVE
+          if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+          {
+            sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
+          }
+#endif
         }
         for (uint8_t mergeCand = 0; mergeCand < maxNumTmMrgCand; mergeCand++)
         {
@@ -18030,6 +18084,12 @@ void EncCu::xCheckRDCostIBCModeMerge2Nx2N(CodingStructure *&tempCS, CodingStruct
             maskStride = -GEO_WEIGHT_MASK_SIZE;
             maskStride2 = -(int)cu.lwidth();
             sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
+#if GPM_CURVE
+            if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+            {
+              sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][(GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][1]) * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
+            }
+#endif
           }
           else if (g_angle2mirror[angle] == 1)
           {
@@ -18037,12 +18097,24 @@ void EncCu::xCheckRDCostIBCModeMerge2Nx2N(CodingStructure *&tempCS, CodingStruct
             maskStride2 = cu.lwidth();
             maskStride = GEO_WEIGHT_MASK_SIZE;
             sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
+#if GPM_CURVE
+            if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+            {
+              sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + (GEO_WEIGHT_MASK_SIZE - 1 - g_weightOffset[splitDir][hIdx][wIdx][0])];
+            }
+#endif
           }
           else
           {
             maskStride = GEO_WEIGHT_MASK_SIZE;
             maskStride2 = -(int)cu.lwidth();
             sadMask = &g_geoEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
+#if GPM_CURVE
+            if(g_geoParams[splitDir][1] == 0 && wIdx == hIdx && wIdx >= 2)
+            {
+              sadMask = &g_geoCurveEncSadMask[g_angle2mask[g_geoParams[splitDir][0]]][g_weightOffset[splitDir][hIdx][wIdx][1] * GEO_WEIGHT_MASK_SIZE + g_weightOffset[splitDir][hIdx][wIdx][0]];
+            }
+#endif
           }
           Distortion sadSmall = 0, sadLarge = 0;
           double tempCost = 0;

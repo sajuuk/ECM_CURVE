@@ -370,6 +370,9 @@ extern int16_t** g_geoParams;
 #if JVET_AB0155_SGPM
 extern int16_t *g_geoWeights[TOTAL_GEO_BLENDING_NUM][GEO_NUM_PRESTORED_MASK];
 extern int      g_bld2Width[TOTAL_GEO_BLENDING_NUM];
+#if GPM_CURVE
+extern int16_t *g_geoCurveWeights[TOTAL_GEO_BLENDING_NUM][GEO_NUM_PRESTORED_MASK];
+#endif
 #elif JVET_AA0058_GPM_ADAPTIVE_BLENDING
 extern int16_t*  g_geoWeights   [GEO_BLENDING_NUM][GEO_NUM_PRESTORED_MASK];
 extern int       g_bld2Width          [GEO_BLENDING_NUM];
@@ -381,6 +384,9 @@ extern Pel*      g_geoWeightsTpl[GEO_NUM_PRESTORED_MASK];
 #endif
 #if JVET_R0351_HIGH_BIT_DEPTH_SUPPORT
 extern Pel*      g_geoEncSadMask[GEO_NUM_PRESTORED_MASK];
+#if GPM_CURVE
+extern Pel*      g_geoCurveEncSadMask[GEO_NUM_PRESTORED_MASK];
+#endif
 #else
 extern int16_t*  g_geoEncSadMask[GEO_NUM_PRESTORED_MASK];
 #endif
