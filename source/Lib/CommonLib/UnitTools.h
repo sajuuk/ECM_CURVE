@@ -192,6 +192,9 @@ namespace CU
 #if JVET_AG0112_REGRESSION_BASED_GPM_BLENDING
   bool isGeoBlendAvailable(const CodingUnit& cu);
 #endif
+#if GPM_CURVE
+  bool isGeoCURVEAvailable(int splitDir,int cuSize);
+#endif
 }
 // PU tools
 namespace PU

@@ -1373,6 +1373,7 @@ static const int GEO_CURVE_MIN_CU_LOG2 = 4;
 static const int GEO_CURVE_MAX_CU_LOG2 = 6;
 static const int GEO_CURVE_MIN_CU_SIZE = 1 << GEO_CURVE_MIN_CU_LOG2;
 static const int GEO_CURVE_MAX_CU_SIZE = 1 << GEO_CURVE_MAX_CU_LOG2;
+static const int GEO_CURVE_MIN_CU_IDX = 1;
 #endif
 
 #if JVET_AB0155_SGPM

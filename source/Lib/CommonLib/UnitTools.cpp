@@ -28083,6 +28083,26 @@ bool CU::isGeoBlendAvailable( const CodingUnit& cu )
 }
 #endif
 
+#if GPM_CURVE
+bool CU::isGeoCURVEAvailable(int splitDir,int cuSize)
+{
+  switch (cuSize)
+  {
+  case 16:
+  case 32:
+    if(splitDir == 14 || splitDir == 6 || splitDir == 28 || splitDir == 2 || splitDir == 32)
+      return true;
+    break;
+  case 64:
+    return true;
+    break;
+  default:
+    break;
+  }
+  return false;
+}
+#endif
+
 #if JVET_AC0130_NSPT
 int PU::getNSPTMatrixDim( int width, int height )
 {
