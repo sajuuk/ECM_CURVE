@@ -4838,6 +4838,10 @@ void destroyROM()
     {
       delete[] g_geoWeights[bldIdx][i];
       g_geoWeights[bldIdx][i] = nullptr;
+#if GPM_CURVE
+      delete[] g_geoCurveWeights[bldIdx][i];
+      g_geoCurveWeights[bldIdx][i] = nullptr;
+#endif
     }
   }
 
@@ -4845,6 +4849,10 @@ void destroyROM()
   {
     delete[] g_geoEncSadMask[i];
     g_geoEncSadMask[i] = nullptr;
+#if GPM_CURVE
+    delete[] g_geoCurveEncSadMask[i];
+    g_geoCurveEncSadMask[i] = nullptr;
+#endif
 #if JVET_Z0056_GPM_SPLIT_MODE_REORDERING
     delete[] g_geoWeightsTpl[i];
     g_geoWeightsTpl[i] = nullptr;
@@ -5268,6 +5276,40 @@ void initGeoTemplate()
     for (int bldIdx = 0; bldIdx < GEO_BLENDING_NUM; bldIdx++)
 #endif
     {
+#if GPM_CURVE
+      g_geoCurveWeights[bldIdx][g_angle2mask[angleIdx]] = new int16_t[GEO_WEIGHT_MASK_SIZE * GEO_WEIGHT_MASK_SIZE];
+      int indexCurve=0;
+      int circleCenterx=circleCenter[g_angle2mask[angleIdx]][0];
+      int circleCentery=circleCenter[g_angle2mask[angleIdx]][1];
+      for (int y=0;y<GEO_WEIGHT_MASK_SIZE;y++)
+      {
+         for(int x=0;x<GEO_WEIGHT_MASK_SIZE;x++,indexCurve++)
+         {
+          int     indexGeoWeight2x, indexGeoWeight2y;
+          indexGeoWeight2x = indexCurve % GEO_WEIGHT_MASK_SIZE;
+          indexGeoWeight2y = 112 - indexCurve / GEO_WEIGHT_MASK_SIZE;
+          int radiusSquare       = (indexGeoWeight2x - circleCenterx) * (indexGeoWeight2x - circleCenterx)
+                         + (indexGeoWeight2y - circleCentery) * (indexGeoWeight2y - circleCentery);
+          int blendweight;
+          blendweight = (int)floor(sqrt(radiusSquare) - sqrt(circleCenter[g_angle2mask[angleIdx]][2]));
+          int bldWidth = g_bld2Width[bldIdx];
+          if(blendweight < -(bldWidth >> 1))
+          {
+            g_geoCurveWeights[bldIdx][g_angle2mask[angleIdx]][indexCurve] = 0;
+          }
+          else if (blendweight > (bldWidth >> 1))
+          {
+            g_geoCurveWeights[bldIdx][g_angle2mask[angleIdx]][indexCurve] = 32;
+          }
+          else
+          {
+            g_geoCurveWeights[bldIdx][g_angle2mask[angleIdx]][indexCurve] = blendweight * 32 / bldWidth + 16;
+          }
+          g_geoCurveWeights[bldIdx][g_angle2mask[angleIdx]][indexCurve] = Clip3<int>(0,32,g_geoCurveWeights[bldIdx][g_angle2mask[angleIdx]][indexCurve]);
+          // g_geoCurveWeights[bldIdx][g_angle2mask[angleIdx]][indexCurve]*=100;
+         }
+      }
+#endif
       g_geoWeights[bldIdx][g_angle2mask[angleIdx]] = new int16_t[GEO_WEIGHT_MASK_SIZE * GEO_WEIGHT_MASK_SIZE];
 
       int distanceX = angleIdx;
@@ -5305,6 +5347,26 @@ void initGeoTemplate()
     {
       continue;
     }
+#if GPM_CURVE
+      g_geoCurveEncSadMask[g_angle2mask[angleIdx]] = new int16_t[GEO_WEIGHT_MASK_SIZE * GEO_WEIGHT_MASK_SIZE];
+      int indexCurve=0;
+      int circleCenterx=circleCenter[g_angle2mask[angleIdx]][0];
+      int circleCentery=circleCenter[g_angle2mask[angleIdx]][1];
+      for (int y=0;y<GEO_WEIGHT_MASK_SIZE;y++)
+      {
+         for(int x=0;x<GEO_WEIGHT_MASK_SIZE;x++,indexCurve++)
+         {
+          int     indexGeoWeight2x, indexGeoWeight2y;
+          indexGeoWeight2x = indexCurve % GEO_WEIGHT_MASK_SIZE;
+          indexGeoWeight2y = 112 - indexCurve / GEO_WEIGHT_MASK_SIZE;
+          int radiusSquare       = (indexGeoWeight2x - circleCenterx) * (indexGeoWeight2x - circleCenterx)
+                         + (indexGeoWeight2y - circleCentery) * (indexGeoWeight2y - circleCentery);
+          int blendweight;
+          blendweight = (int)floor(sqrt(radiusSquare) - sqrt(circleCenter[g_angle2mask[angleIdx]][2]));
+          g_geoCurveEncSadMask[g_angle2mask[angleIdx]][indexCurve] = blendweight > 0 ? 1:0;
+         }
+      }
+#endif
 #if JVET_Z0056_GPM_SPLIT_MODE_REORDERING || JVET_AB0155_SGPM
     g_geoWeightsTpl[g_angle2mask[angleIdx]] = new Pel[GEO_WEIGHT_MASK_SIZE_EXT * GEO_WEIGHT_MASK_SIZE_EXT];
 #endif
@@ -5480,6 +5542,20 @@ void initGeoTemplate()
     }
   }
   fclose(file);
+  file = fopen("g_geoCurveWeights.txt", "wb");
+  for (int angleIdx = 0; angleIdx < (GEO_NUM_ANGLES >> 2) + 1; angleIdx++)
+  {
+    if (g_angle2mask[angleIdx] == -1)
+    {
+      continue;
+    }
+    for (int bldIdx = 0; bldIdx < TOTAL_GEO_BLENDING_NUM; bldIdx++)
+    {
+      int index = 0;
+      fwrite(g_geoCurveWeights[bldIdx][g_angle2mask[angleIdx]],sizeof(int16_t),GEO_WEIGHT_MASK_SIZE * GEO_WEIGHT_MASK_SIZE,file);
+    }
+  }
+  fclose(file);
 #endif
 
 }
@@ -5502,6 +5578,9 @@ Pel*      g_geoWeightsTpl[GEO_NUM_PRESTORED_MASK];
 #endif
 #if JVET_R0351_HIGH_BIT_DEPTH_SUPPORT
 Pel*      g_geoEncSadMask[GEO_NUM_PRESTORED_MASK];
+#if GPM_CURVE
+Pel*      g_geoCurveEncSadMask[GEO_NUM_PRESTORED_MASK];
+#endif
 #else
 int16_t*  g_geoEncSadMask[GEO_NUM_PRESTORED_MASK];
 #endif
