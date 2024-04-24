@@ -5335,6 +5335,12 @@ void initGeoTemplate()
             int weightLinearIdx = 8 + weightIdx;
             g_geoWeights[bldIdx][g_angle2mask[angleIdx]][index] = Clip3(0, 32, weightLinearIdx << 1);
           }
+#if GPM_BLEND
+          double width = (double)g_bld2Width[bldIdx];
+          double preWeight = (double)g_geoWeights[bldIdx][g_angle2mask[angleIdx]][index];
+          g_geoWeights[bldIdx][g_angle2mask[angleIdx]][index] = (int16_t)round((tanh(preWeight/width * 5.0 - 2.5) + 1.0) * 16.0);
+          g_geoWeights[bldIdx][g_angle2mask[angleIdx]][index] = Clip3<int16_t>(0, 32, g_geoWeights[bldIdx][g_angle2mask[angleIdx]][index]);
+#endif
         }
       }
     }
@@ -5527,8 +5533,24 @@ void initGeoTemplate()
     }
   }
 #endif
+#if GPM_CURVE || GPM_BLEND
+  FILE *file0 = fopen("g_geoWeights.txt", "wb");
+  for (int angleIdx = 0; angleIdx < (GEO_NUM_ANGLES >> 2) + 1; angleIdx++)
+  {
+    if (g_angle2mask[angleIdx] == -1)
+    {
+      continue;
+    }
+    for (int bldIdx = 0; bldIdx < TOTAL_GEO_BLENDING_NUM; bldIdx++)
+    {
+      int index = 0;
+      fwrite(g_geoWeights[bldIdx][g_angle2mask[angleIdx]],sizeof(int16_t),GEO_WEIGHT_MASK_SIZE * GEO_WEIGHT_MASK_SIZE,file0);
+    }
+  }
+  fclose(file0);
+#endif
 #if GPM_CURVE
-  FILE *file = fopen("g_geoWeights.txt", "wb");
+  FILE *file1 = fopen("g_geoCurveWeights.txt", "wb");
   for (int angleIdx = 0; angleIdx < (GEO_NUM_ANGLES >> 2) + 1; angleIdx++)
   {
     if (g_angle2mask[angleIdx] == -1)
@@ -5538,24 +5560,10 @@ void initGeoTemplate()
     for (int bldIdx = 0; bldIdx < TOTAL_GEO_BLENDING_NUM; bldIdx++)
     {
       int index = 0;
-      fwrite(g_geoWeights[bldIdx][g_angle2mask[angleIdx]],sizeof(int16_t),GEO_WEIGHT_MASK_SIZE * GEO_WEIGHT_MASK_SIZE,file);
+      fwrite(g_geoCurveWeights[bldIdx][g_angle2mask[angleIdx]],sizeof(int16_t),GEO_WEIGHT_MASK_SIZE * GEO_WEIGHT_MASK_SIZE,file1);
     }
   }
-  fclose(file);
-  file = fopen("g_geoCurveWeights.txt", "wb");
-  for (int angleIdx = 0; angleIdx < (GEO_NUM_ANGLES >> 2) + 1; angleIdx++)
-  {
-    if (g_angle2mask[angleIdx] == -1)
-    {
-      continue;
-    }
-    for (int bldIdx = 0; bldIdx < TOTAL_GEO_BLENDING_NUM; bldIdx++)
-    {
-      int index = 0;
-      fwrite(g_geoCurveWeights[bldIdx][g_angle2mask[angleIdx]],sizeof(int16_t),GEO_WEIGHT_MASK_SIZE * GEO_WEIGHT_MASK_SIZE,file);
-    }
-  }
-  fclose(file);
+  fclose(file1);
 #endif
 
 }
